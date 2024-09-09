@@ -1,4 +1,4 @@
-package modelo.infraestructure.controller;
+package clientes.infraestructure.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,47 +15,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import modelo.application.IModeloService;
-import modelo.domain.entity.Modelo;
+import clientes.application.IClientesService;
+import clientes.domain.entity.Clientes;
 
 @RestController
-@RequestMapping("/campusbike/modelo")
-public class ModeloController {
+@RequestMapping("/campusbike/cliente")
+public class ClienteController {
 
     @Autowired
-    private IModeloService iModeloService;
+    private IClientesService iClientesService;
+
 
     @GetMapping
-    public List<Modelo> list(){
-        return iModeloService.getAll();
+    public List<Clientes> list(){
+        return iClientesService.getAll();
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Modelo> show(@PathVariable Long id) {
-        Optional<Modelo> modelo = iModeloService.findByID(id);
-        return modelo.map( c -> new ResponseEntity<>(c, HttpStatus.OK))
+    public ResponseEntity<Clientes> show(@PathVariable Long id) {
+        Optional<Clientes> cliente = iClientesService.findByID(id);
+        return cliente.map( c -> new ResponseEntity<>(c, HttpStatus.OK))
             .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<Modelo> create(@RequestBody Modelo modelo) {
+    public ResponseEntity<Clientes> create(@RequestBody Clientes cliente) {
 
-        iModeloService.save(modelo);
-        return new ResponseEntity<>(modelo, HttpStatus.CREATED);
+        iClientesService.save(cliente);
+        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Modelo> update(@PathVariable Long id,
-            @RequestBody Modelo modelo) {
+    public ResponseEntity<Clientes> update(@PathVariable Long id,
+            @RequestBody Clientes cliente) {
 
-            Modelo modeloUser = iModeloService.save(modelo);
-        return new ResponseEntity<>(modeloUser, HttpStatus.OK);
+            Clientes clienteUser = iClientesService.save( cliente);
+        return new ResponseEntity<>(clienteUser, HttpStatus.OK);
     };
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (iModeloService.findByID(id).isPresent()) {
-            iModeloService.deleteById(id);
+        if (iClientesService.findByID(id).isPresent()) {
+            iClientesService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

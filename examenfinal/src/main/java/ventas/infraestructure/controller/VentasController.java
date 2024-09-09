@@ -1,4 +1,5 @@
-package modelo.infraestructure.controller;
+package ventas.infraestructure.controller;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -15,51 +16,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import modelo.application.IModeloService;
-import modelo.domain.entity.Modelo;
+import ventas.application.IVentaService;
+import ventas.domain.entity.Ventas;
 
 @RestController
-@RequestMapping("/campusbike/modelo")
-public class ModeloController {
+@RequestMapping("/campusbike/ventas")
+public class VentasController {
 
     @Autowired
-    private IModeloService iModeloService;
+    private IVentaService iVentaService;
 
     @GetMapping
-    public List<Modelo> list(){
-        return iModeloService.getAll();
+    public List<Ventas> list(){
+        return iVentaService.getAll();
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Modelo> show(@PathVariable Long id) {
-        Optional<Modelo> modelo = iModeloService.findByID(id);
-        return modelo.map( c -> new ResponseEntity<>(c, HttpStatus.OK))
+    public ResponseEntity<Ventas> show(@PathVariable Long id) {
+        Optional<Ventas> Venta = iVentaService.findByID(id);
+        return Venta.map( c -> new ResponseEntity<>(c, HttpStatus.OK))
             .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<Modelo> create(@RequestBody Modelo modelo) {
+    public ResponseEntity<Ventas> create(@RequestBody Ventas Venta) {
 
-        iModeloService.save(modelo);
-        return new ResponseEntity<>(modelo, HttpStatus.CREATED);
+        iVentaService.save(Venta);
+        return new ResponseEntity<>(Venta, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Modelo> update(@PathVariable Long id,
-            @RequestBody Modelo modelo) {
+    public ResponseEntity<Ventas> update(@PathVariable Long id,
+            @RequestBody Ventas Venta) {
 
-            Modelo modeloUser = iModeloService.save(modelo);
-        return new ResponseEntity<>(modeloUser, HttpStatus.OK);
+            Ventas ventaUser = iVentaService.save( Venta);
+        return new ResponseEntity<>(ventaUser, HttpStatus.OK);
     };
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (iModeloService.findByID(id).isPresent()) {
-            iModeloService.deleteById(id);
+        if (iVentaService.findByID(id).isPresent()) {
+            iVentaService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
 }

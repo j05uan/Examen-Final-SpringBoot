@@ -19,7 +19,7 @@ import bicicletas.application.IBicicletasService;
 import bicicletas.domain.entity.Bicicletas;
 
 @RestController
-@RequestMapping("campusbike/bicicletas")
+@RequestMapping("/campusbike/bicicletas")
 public class BicicletasController {
 
     @Autowired

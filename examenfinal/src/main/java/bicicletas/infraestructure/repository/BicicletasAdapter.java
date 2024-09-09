@@ -1,4 +1,4 @@
-package bicicletas.infraestructure.repository.controller;
+package bicicletas.infraestructure.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import bicicletas.application.IBicicletasService;
 import bicicletas.domain.entity.Bicicletas;
-import bicicletas.infraestructure.repository.IBicicletaRepository;
 
 @Service
 public class BicicletasAdapter implements IBicicletasService {

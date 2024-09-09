@@ -1,5 +1,4 @@
-package modelo.infraestructure.controller;
-
+package paises.infraestructure.controller;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,47 +14,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import modelo.application.IModeloService;
-import modelo.domain.entity.Modelo;
+import paises.application.IPaisService;
+import paises.domain.entity.Pais;
 
 @RestController
-@RequestMapping("/campusbike/modelo")
-public class ModeloController {
+@RequestMapping("/campusbike/pais")
+public class PaisController {
 
     @Autowired
-    private IModeloService iModeloService;
+    private IPaisService iPaisService;
 
     @GetMapping
-    public List<Modelo> list(){
-        return iModeloService.getAll();
+    public List<Pais> list(){
+        return iPaisService.getAll();
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Modelo> show(@PathVariable Long id) {
-        Optional<Modelo> modelo = iModeloService.findByID(id);
-        return modelo.map( c -> new ResponseEntity<>(c, HttpStatus.OK))
+    public ResponseEntity<Pais> show(@PathVariable Long id) {
+        Optional<Pais> pais = iPaisService.findByID(id);
+        return pais.map( c -> new ResponseEntity<>(c, HttpStatus.OK))
             .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<Modelo> create(@RequestBody Modelo modelo) {
+    public ResponseEntity<Pais> create(@RequestBody Pais pais) {
 
-        iModeloService.save(modelo);
-        return new ResponseEntity<>(modelo, HttpStatus.CREATED);
+        iPaisService.save(pais);
+        return new ResponseEntity<>(pais, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Modelo> update(@PathVariable Long id,
-            @RequestBody Modelo modelo) {
+    public ResponseEntity<Pais> update(@PathVariable Long id,
+            @RequestBody Pais pais) {
 
-            Modelo modeloUser = iModeloService.save(modelo);
-        return new ResponseEntity<>(modeloUser, HttpStatus.OK);
+            Pais paisUser = iPaisService.save( pais);
+        return new ResponseEntity<>(paisUser, HttpStatus.OK);
     };
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (iModeloService.findByID(id).isPresent()) {
-            iModeloService.deleteById(id);
+        if (iPaisService.findByID(id).isPresent()) {
+            iPaisService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

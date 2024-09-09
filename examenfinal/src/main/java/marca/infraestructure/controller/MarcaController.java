@@ -19,7 +19,7 @@ import marca.application.IMarcaService;
 import marca.domain.entity.Marca;
 
 @RestController
-@RequestMapping("campusbike/marca")
+@RequestMapping("/campusbike/marca")
 public class MarcaController {
 
     @Autowired
