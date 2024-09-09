@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import marca.domain.entity.Marca;
@@ -30,11 +30,11 @@ public class Bicicletas {
     @JoinColumn(name = "marca_id")
     private Marca marca;
 
-    @NotBlank
+    @NotNull
     @Column ( columnDefinition = "DECIMAL(10,2)", nullable = false)
     private int precio;
 
-    @NotBlank
+    @NotNull
     @Column( columnDefinition = "INT", nullable = false)
     private int stock;
 }
